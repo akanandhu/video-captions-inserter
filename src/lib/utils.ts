@@ -17,3 +17,9 @@ export const formatTimeWithMS = (seconds: number): string => {
     .toString()
     .padStart(3, "0")}`;
 };
+
+export const isValidUrl = (url: string) => {
+  const urlPattern =
+    /^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d{1,5})?(\/.*)?$/;
+  return urlPattern.test(url);
+};

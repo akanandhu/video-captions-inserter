@@ -52,7 +52,7 @@ export const CaptionEditor = (props: Props) => {
       let timeInSeconds = 0;
 
       if (value.includes(":") || value.includes(",")) {
-        const parts = value.split(/[:,]/).map(Number);
+        const parts = value.split(/[:/,]/).map(Number);
         console.log(parts, "partsCheck");
         let hours = 0,
           minutes = 0,

@@ -3,6 +3,7 @@ import ReactPlayer from "react-player";
 import { Input } from "@/components/ui/input";
 import { VideoPlayer } from "./components/feature/video-player";
 import { CaptionEditor } from "./components/feature/caption-editor";
+import { isValidUrl } from "./lib/utils";
 
 interface Caption {
   id: number;
@@ -16,13 +17,23 @@ const App: React.FC = () => {
   const [videoUrl, setVideoUrl] = useState("");
   const [currentTime, setCurrentTime] = useState(0);
   const [captions, setCaptions] = useState<Caption[]>([]);
+  const [error, setError] = useState("");
 
-  // Function to track current video time
+  const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setVideoUrl(value);
+
+    if (isValidUrl(value)) {
+      setError("");
+    } else {
+      setError("Please enter a valid URL");
+    }
+  };
+
   const handleProgress = (state: { playedSeconds: number }) => {
     setCurrentTime(state.playedSeconds);
   };
 
-  // Check if a caption should be displayed
   const currentCaption = captions.find(
     (cap) => currentTime >= cap.startTime && currentTime <= cap.endTime
   );
@@ -32,14 +43,15 @@ const App: React.FC = () => {
       <h2 className="text-xl font-semibold">
         Welcome! Please Input the Link Of Your Video
       </h2>
-      {/* Video URL Input */}
-      <div className="flex gap-2 w-full max-w-md">
+      {/* Video Input */}
+      <div className="flex flex-col gap-2 w-full max-w-md">
         <Input
           type="text"
           placeholder="Enter video URL..."
           value={videoUrl}
-          onChange={(e) => setVideoUrl(e.target.value)}
+          onChange={handleUrlChange}
         />
+        {error && <span className="text-red-500 text-sm">{error}</span>}
       </div>
 
       {/* Video Player */}
