@@ -1,5 +1,5 @@
 
-# Video Caption Editor
+# [Video Caption Editor](https://video-captions-adder.netlify.app/)
 
 A simple web application that allows users to add captions to videos.
 
